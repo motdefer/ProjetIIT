@@ -1,0 +1,95 @@
+\documentclass[10pt]{article}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{geometry}
+\usepackage{natbib}
+\usepackage{lmodern}
+\usepackage{xcolor}
+
+\usepackage[french]{babel}
+\usepackage{listings}
+
+\geometry{letterpaper}
+%\usepackage{1garamond}
+
+\newcommand*\Title{DNS}
+\newcommand*\Project{Projet}
+\newcommand*\cpiType{Documentation}
+\newcommand*\Date{}
+\newcommand*\Author{Pierre Gri\'e}
+\title{DNS}
+\author{Pierre Gri\'e}
+\date{\today}
+
+
+\lstset{
+  basicstyle=\color{black},
+  frame=single,
+  keywordstyle=\color[RGB]{227,89,114}\bfseries, % style for keywords
+  frameround=tttt,
+  rulecolor=\color{black},
+  language=bash,
+  captionpos=b, % sets the caption-position to bottom
+  breaklines=true, % sets automatic line breaking
+  breakatwhitespace=false,
+  showspaces=false,
+  showtabs=false,
+  showstringspaces=false,
+  morekeywords={grep},
+}
+
+
+%-----------------------------------------------------------
+
+\usepackage{cpistuff/cpi} % This is what makes your document look like a cpi document.
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+\restoregeometry
+
+\linespread{1.15} %Set standard document linespacing
+
+\section{Presentation}
+
+Pr\'esentation du service mis en place, ses fonctionnalit\'es.
+
+\frame{
+\textbf{Alerte}
+
+La balise frame permet de cr\'eer un encadr\'e, qui peut \^etre utilis\'e pour faire ressortir une information essentielle.
+}
+
+\section{Section}
+
+\subsection{Sous-section}
+
+\subsubsection{Sous-sous-section}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pretium sed purus eu tristique. Nulla pulvinar in dolor sed lobortis. Praesent tincidunt blandit tristique. Sed luctus aliquet tortor ullamcorper porttitor. In molestie nisl et ipsum ullamcorper bibendum. Sed at sodales leo, ut molestie ipsum. Nam rhoncus sit amet ante eu sagittis. Mauris at egestas metus. Curabitur scelerisque venenatis lorem id bibendum. Proin mattis consequat accumsan. Pellentesque et rhoncus justo, ac tempor sem. Sed lacus diam, tempor et efficitur non, dapibus non nisl. Vivamus aliquet justo finibus massa ullamcorper elementum. Etiam sagittis, odio id aliquam aliquam, nisl nibh tristique quam, non\\
+
+\begin{lstlisting}[title=Test]
+  echo "Bonjour"
+  awk Test
+  ps -aux|grep truc
+\end{lstlisting}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pretium sed purus eu tristique. Nulla pulvinar in dolor sed lobortis. Praesent tincidunt blandit tristique. Sed luctus aliquet tortor ullamcorper porttitor. In molestie nisl et ipsum ullamcorper bibendum. Sed at sodales leo, ut molestie ipsum. Nam rhoncus sit amet ante eu sagittis. Mauris at egestas metus. Curabitur scelerisque venenatis lorem id bibendum. Proin mattis consequat accumsan. Pellentesque et rhoncus justo, ac tempor sem. Sed lacus diam, tempor et efficitur non, dapibus non nisl. Vivamus aliquet justo finibus massa ullamcorper elementum. Etiam sagittis, odio id aliquam aliquam, nisl nibh tristique quam, non\\
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pretium sed purus eu tristique. Nulla pulvinar in dolor sed lobortis. Praesent tincidunt blandit tristique. Sed luctus aliquet tortor ullamcorper porttitor. In molestie nisl et ipsum ullamcorper bibendum. Sed at sodales leo, ut molestie ipsum. Nam rhoncus sit amet ante eu sagittis. Mauris at egestas metus. Curabitur scelerisque venenatis lorem id bibendum. Proin mattis consequat accumsan. Pellentesque et rhoncus justo, ac tempor sem. Sed lacus diam, tempor et efficitur non, dapibus non nisl. Vivamus aliquet justo finibus massa ullamcorper elementum. Etiam sagittis, odio id aliquam aliquam, nisl nibh tristique quam, non\\
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pretium sed purus eu tristique. Nulla pulvinar in dolor sed lobortis. Praesent tincidunt blandit tristique. Sed luctus aliquet tortor ullamcorper porttitor. In molestie nisl et ipsum ullamcorper bibendum. Sed at sodales leo, ut molestie ipsum. Nam rhoncus sit amet ante eu sagittis. Mauris at egestas metus. Curabitur scelerisque venenatis lorem id bibendum. Proin mattis consequat accumsan. Pellentesque et rhoncus justo, ac tempor sem. Sed lacus diam, tempor et efficitur non, dapibus non nisl. Vivamus aliquet justo finibus massa ullamcorper elementum. Etiam sagittis, odio id aliquam aliquam, nisl nibh tristique quam, non\\
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pretium sed purus eu tristique. Nulla pulvinar in dolor sed lobortis. Praesent tincidunt blandit tristique. Sed luctus aliquet tortor ullamcorper porttitor. In molestie nisl et ipsum ullamcorper bibendum. Sed at sodales leo, ut molestie ipsum. Nam rhoncus sit amet ante eu sagittis. Mauris at egestas metus. Curabitur scelerisque venenatis lorem id bibendum. Proin mattis consequat accumsan. Pellentesque et rhoncus justo, ac tempor sem. Sed lacus diam, tempor et efficitur non, dapibus non nisl. Vivamus aliquet justo finibus massa ullamcorper elementum. Etiam sagittis, odio id aliquam aliquam, nisl nibh tristique quam, non\\
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pretium sed purus eu tristique. Nulla pulvinar in dolor sed lobortis. Praesent tincidunt blandit tristique. Sed luctus aliquet tortor ullamcorper porttitor. In molestie nisl et ipsum ullamcorper bibendum. Sed at sodales leo, ut molestie ipsum. Nam rhoncus sit amet ante eu sagittis. Mauris at egestas metus. Curabitur scelerisque venenatis lorem id bibendum. Proin mattis consequat accumsan. Pellentesque et rhoncus justo, ac tempor sem. Sed lacus diam, tempor et efficitur non, dapibus non nisl. Vivamus aliquet justo finibus massa ullamcorper elementum. Etiam sagittis, odio id aliquam aliquam, nisl nibh tristique quam, non\\
+
+
+\bibliography{codes_impact}
+\bibliographystyle{plainnat}
+
+\end{document}

@@ -1,0 +1,6 @@
+mktexpk --mfmode / --bdpi 600 --mag 1+264/600 --dpi 864 ggmr8r
+mktextfm ggmr8t
+mktextfm ggmr8t
+mktextfm ggmr8t
+mktextfm ggmr8t
+mktextfm ggmr8t
