@@ -1,0 +1,84 @@
+---
+- name: Install Bind9
+  apt:
+    name: bind9
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  
+- name: Create DNS file
+  template:
+    src: templates/dns.conf
+    dest: /etc/bind/named.conf.local
+    mode: 0755
+
+- name: Create DNS zone DB files
+  template:
+    src: templates/db.empty
+    dest: "/etc/bind/{{ item.file }}"
+    mode: 0755
+  with_items:
+    - "{{ dns_zones }}"
+
+- name: Create symbolic link for DB files
+  file:
+    src: "/etc/bind/{{ item.file }}"
+    dest: "/var/cache/bind/{{ item.file }}"
+    state: link
+    force: yes
+  with_items:
+    - "{{ dns_zones }}" 
+
+- name: Check if keys files exist
+  stat:
+    path: "/etc/bind/{{ item.file }}"
+  with_items:
+    - "{{ dns_keys }}"
+  register: check
+
+- name: Combine keys and file existence
+  set_fact:
+    checked_keys: "{{ item.item | combine({ 'exists': item.stat.exists  }) }}"
+  with_items: 
+    - "{{ check.results }}"
+  register: c_keys
+
+- name: Clear test
+  set_fact:
+    dns_keys: "{{ c_keys.results|map(attribute='ansible_facts.checked_keys')|list }}"
+
+- name: Generate keys pair for DDNS
+  shell: dnssec-keygen -a {{ item.algorithm }} -b 128 -r /dev/urandom -n USER {{ item.name }}
+  register: keys
+  with_items:
+    - "{{ dns_keys }}"
+  when: not item.exists
+
+- debug: var=keys
+
+- name: Get private key value
+  shell: awk '/Key/{print $2}' {{ item.stdout }}.private
+  register: privates
+  with_items:
+    - "{{ keys.results }}"
+  when: not item.skipped|default(false)
+
+- name: Generate DDNS key file
+  template:
+    src: templates/ddns.key
+    dest: "/etc/bind/{{ item.item.item.file }}"
+    mode: 0755
+  with_items:
+    - "{{ privates.results }}"
+  when: not item.skipped|default(false)
+
+- name: Get public key file
+  fetch:
+    src: "/etc/bind/{{ item.file }}"
+    dest: "{{ dns_keys_local_dict }}/{{ item.file }}"
+    mode: 0744
+    flat: yes
+  with_items:
+    - "{{ dns_keys }}"
+  notify: restart bind
+

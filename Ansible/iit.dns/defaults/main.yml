@@ -1,0 +1,27 @@
+---
+dns_keys:
+  - name: DDNS_UPDATE
+    algorithm: HMAC-MD5
+    file: ddns.key
+
+  - name: DDNS_TEST
+    algorithm: HMAC-MD5
+    file: ddns2.key
+
+dns_keys_local_dict: /home/minipierre/Ansible/ansible-dhcp/provisioning/tpedro.dhcp/files
+
+dns_zones:
+  - name: etu.eseo.fr
+    ddns_key: DDNS_UPDATE
+    type: master
+    file: db.eseo.fr
+
+  - name: 33.168.192
+    reverse: etu.eseo.fr
+    ddns_key: DDNS_UPDATE
+    type: master
+    file: db.192.168.33
+
+static_entries:
+  - name: dhcp
+    ip: 192.168.33.10

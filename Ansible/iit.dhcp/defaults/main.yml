@@ -1,0 +1,31 @@
+---
+dhcp_subnets:
+  - network:
+      address: 192.168.33.0
+      netmask: 255.255.255.0
+    range:
+      inf: 192.168.33.20
+      sup: 192.168.33.30
+      netmask: 255.255.255.0
+    dns:
+      server: 192.168.33.11
+      domain: etu.eseo.fr 
+
+dns_keys:
+  - name: DDNS_UPDATE
+    algorithm: HMAC-MD5
+    file: ddns.key
+
+  - name: DDNS_TEST
+    algorithm: HMAC-MD5
+    file: ddns2.key
+
+dns_zones:
+  - name: etu.eseo.fr
+    ddns_key: DDNS_UPDATE
+    primary: 192.168.33.11
+
+  - name: 33.168.192
+    reverse: etu.eseo.fr
+    ddns_key: DDNS_UPDATE
+    primary: 192.168.33.11    

@@ -1,0 +1,12 @@
+---
+dhcp_subnets:
+  - network:
+      - address: 192.168.33.0
+      - netmask: 255.255.255.0
+    range:
+      - inf: 192.168.33.20
+      - sup: 192.168.33.30
+      - netmask: 255.255.255.0
+    dns:
+      - server: 192.168.33.11
+      - domain: etu.eseo.fr 

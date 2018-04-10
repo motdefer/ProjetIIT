@@ -1,0 +1,21 @@
+---
+- name: Install DHCP 
+  apt:
+    name: isc-dhcp-server
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Import DDNS keys files
+  copy:
+    src: files/{{ item.file }}
+    dest: /etc/dhcp/{{ item.file }}
+  with_items:
+    - "{{ dns_keys }}"
+
+- name: Generate DHCP file
+  template:
+    src: templates/dhcpd.conf
+    dest: /etc/dhcp/dhcpd.conf
+    mode: 0755
+  notify: restart dhcp
