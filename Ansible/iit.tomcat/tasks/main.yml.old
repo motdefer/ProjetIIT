@@ -1,0 +1,28 @@
+---
+- name: Create Tomcat root directory
+  file:
+    path: "{{ tomcat_root }}"
+    state: directory
+
+- name: Unzip Tomcat
+  unarchive:
+    src: files/apache-tomcat-{{ tomcat_version }}.tar.gz
+    dest: "{{ tomcat_root }}"
+
+- name: Install Java
+  apt:
+    name: "{{ jdk_version }}"
+    state: present
+    update_cache: yes
+
+- name: Install Tomcat init script
+  template: src=templates/tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+
+- name: Copy Tomcat setenv script
+  copy:
+    src: files/setenv.sh
+    dest: "{{ tomcat_root }}/apache-tomcat-{{ tomcat_version }}/bin"
+    mode: 0755
+
+- name: Start Tomcat
+  service: name=tomcat state=started enabled=yes

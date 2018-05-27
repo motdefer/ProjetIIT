@@ -1,0 +1,4 @@
+---
+
+apache2_enabled_modules:
+  - alias

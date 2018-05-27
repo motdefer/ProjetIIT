@@ -1,0 +1,5 @@
+---
+# vars file for iit.loadbalancer
+balancer_members:
+  - "http://192.168.33.1:80"
+  - "http://192.168.33.10:80"

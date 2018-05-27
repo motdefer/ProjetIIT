@@ -1,0 +1,14 @@
+---
+
+apt_cache_valid_time: 600
+
+apache2_enabled_modules:
+  - alias
+
+apache2_disabled_modules:
+  - rewrite
+
+ssl_certs_directory : /etc/ssl/certs
+ssl_keys_directory : /etc/ssl/private
+
+

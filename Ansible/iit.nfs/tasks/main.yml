@@ -1,0 +1,24 @@
+---
+- name: Install NFS packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - nfs-kernel-server
+
+- name: Create shared folders
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: 0777
+  with_items:
+    - "{{ nfs_folders }}"
+
+- name: Configure NFS folders share
+  template:
+    src: templates/exports
+    dest: /etc/exports
+    mode: 0777
+  notify: restart nfs

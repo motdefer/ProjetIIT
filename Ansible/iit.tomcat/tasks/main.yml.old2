@@ -1,0 +1,12 @@
+---
+- name: Install Java
+  apt:
+    name: "{{ jdk_version }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install Tomcat
+  apt:
+    name: tomcat8
+    state: present

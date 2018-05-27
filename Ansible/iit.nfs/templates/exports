@@ -1,0 +1,4 @@
+{% for folder in nfs_folders %}
+{{ folder.path }}	{% for user in folder.users %}{{ user.ip }}(sync,{% if user.write_permission %}rw{% else %}ro{% endif %},{% if user.root_squash_permission %}root_squash{% else %}no_root_squash{% endif %}) {% endfor %}
+
+{% endfor %}

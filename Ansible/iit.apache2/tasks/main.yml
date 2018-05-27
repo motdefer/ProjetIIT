@@ -1,0 +1,32 @@
+---
+- name: Install Apache2
+  tags: configuration
+  apt: name=apache2 state=present update_cache=yes cache_valid_time={{ apt_cache_valid_time }}
+
+- name: Enable Apache modules
+  tags: modules
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items: "{{ apache2_enabled_modules }}"
+  notify: restart apache2
+
+- name: Disable Apache modules
+  tags: modules
+  apache2_module:
+    state: absent
+    name: "{{ item }}"
+  with_items: "{{ apache2_disabled_modules }}"
+  notify: restart apache2
+
+- name: Create SSL certificates directory
+  tags: ssl
+  file:
+    path: "{{ ssl_certs_directory }}"
+    state: directory
+
+- name: Create SSL keys directory
+  tags: ssl
+  file:
+    path: "{{ ssl_keys_directory }}"
+    state: directory

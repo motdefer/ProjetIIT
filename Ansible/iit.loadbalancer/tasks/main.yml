@@ -1,0 +1,6 @@
+---
+- name: Generate load balancer conf
+  template:
+    src: templates/loadbalancer.conf
+    dest: "/etc/apache2/sites-available/loadbalancer.conf"
+    mode: 0755
