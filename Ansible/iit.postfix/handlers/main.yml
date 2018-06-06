@@ -1,0 +1,10 @@
+---
+- name: restart Postfix
+  service:
+    name: postfix
+    state: restarted
+
+- name: restart Dovecot
+  service:
+    name: dovecot
+    state: restarted

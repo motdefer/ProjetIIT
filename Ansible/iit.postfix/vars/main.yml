@@ -1,0 +1,14 @@
+---
+domain: macamera.eseo.fr
+hostname: mail.macamera.eseo.fr
+
+authorized_networks:
+  - 192.168.33.0/24
+  - 192.168.56.0/24
+
+mail_users:
+  - name: pi
+    passwd: $1$sYygfnvV$VxhwBD27yDlr.1CHqXRky0
+  - name: user
+    passwd: $1$2kxlDxCU$s.u4PlAlDwIUiVT2kMcjg.
+

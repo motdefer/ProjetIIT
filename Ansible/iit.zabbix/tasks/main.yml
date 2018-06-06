@@ -1,0 +1,83 @@
+---
+
+- name: Download and install Zabbix deb
+  apt:
+    deb: "{{ zabbix_deb_url }}"
+
+- name: Install required packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - zabbix-server-mysql
+    - zabbix-frontend-php
+    - php-bcmath
+    - php-mbstring
+    - php-xml
+    - php-mysql
+    - python-mysqldb
+
+- name: Generate new root MySQL password
+  command: openssl rand -hex 7 creates=/root/.my.cnf
+  register: mysql_new_root_pass
+
+- name: Update root MySQL password
+  mysql_user: name=root host={{item}} password={{mysql_new_root_pass.stdout}}
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+  when: mysql_new_root_pass.changed
+
+- name: Output new root MySQL password
+  debug: msg="New root password is {{mysql_new_root_pass.stdout}}"
+  when: mysql_new_root_pass.changed
+
+- name: Create my.cnf
+  template: src=templates/my.cnf dest=/root/.my.cnf
+  when: mysql_new_root_pass.changed
+
+- name: Create Zabbix MySQL database
+  mysql_db:
+    name: "{{ zabbix_db }}"
+    encoding: utf8
+    
+- name: Create Zabbix MySQL user
+  mysql_user:
+    name: "{{ zabbix_db_user }}"
+    password: "{{ zabbix_db_passwd }}"
+    priv: "{{ zabbix_db }}.*:ALL"
+
+- name: Copy Zabbix SQL schemas
+  copy:
+    src: files/{{ item }}.sql
+    dest: /tmp/{{ item }}.sql
+  with_items:
+    - create
+
+- name: Import Zabbix SQL schemas
+  mysql_db:
+    name: zabbix
+    state: import
+    target: /tmp/{{ item }}.sql
+  with_items:
+    - create
+  ignore_errors: true
+
+- name: Generate Zabbix configuration
+  template:
+    src: templates/zabbix_server.conf
+    dest: /etc/zabbix/zabbix_server.conf
+  notify: start Zabbix
+
+- name: Enable Apache Zabbix configuration
+  copy:
+    src: files/zabbix-frontend-php.conf
+    dest: /etc/apache2/conf-enabled/zabbix-frontend-php.conf
+
+- name: Generate Zabbix PHPconfiguration
+  template:
+    src: templates/zabbix.conf.php
+    dest: /usr/share/zabbix/conf/zabbix.conf.php
+  notify: reload Apache

@@ -1,0 +1,10 @@
+---
+dovecot_configuration_files :
+  - file: 10-auth.conf
+    path: /etc/dovecot/conf.d/10-auth.conf
+  - file: 10-mail.conf
+    path: /etc/dovecot/conf.d/10-mail.conf
+  - file: 10-master.conf
+    path: /etc/dovecot/conf.d/10-master.conf
+  - file: dovecot.conf
+    path: /etc/dovecot/dovecot.conf

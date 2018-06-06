@@ -1,0 +1,50 @@
+---
+- name: Install Postfix and Dovecot packages
+  apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - postfix
+    - dovecot-core
+    - dovecot-imapd
+
+- name: Generate Postfix configuration
+  template:
+    src: templates/main.cf
+    dest: /etc/postfix/main.cf
+    mode: 644
+
+- name: Dump Postfix configuration
+  shell: postconf -n
+  notify: restart Postfix
+
+- name: Replace Dovecot configuration files
+  copy:
+    src: files/{{ item.file }}
+    dest: "{{ item.path }}"
+  with_items:
+    - "{{ dovecot_configuration_files }}"
+  notify: restart Dovecot
+
+- name: Create Maildir default dirs
+  file:
+    path: /etc/skel/Maildir/{{ item }}
+    state: directory
+  with_items:
+    - cur
+    - new
+    - tmp
+
+- name: Create users for mail accounts
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.passwd }}"
+    state: present
+  with_items:
+    - "{{ mail_users }}"
+
+
+
+

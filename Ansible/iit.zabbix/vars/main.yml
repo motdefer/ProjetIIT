@@ -1,0 +1,5 @@
+---
+zabbix_deb_url: http://repo.zabbix.com/zabbix/3.4/debian/pool/main/z/zabbix-release/zabbix-release_3.4-1+stretch_all.deb
+zabbix_db: zabbix
+zabbix_db_user: zabbix
+zabbix_db_passwd: zabbix
